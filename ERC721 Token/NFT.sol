@@ -1,31 +1,24 @@
 // SPDX-License-Identifier: GPL-3.0
 
-// Amended by HashLips
-/**
-    !Disclaimer!
-    These contracts have been used to create tutorials,
-    and was created for the purpose to teach people
-    how to create smart contracts on the blockchain.
-    please review this code on your own before using any of
-    the following code for production.
-    HashLips will not be liable in any way if for the use 
-    of the code. That being said, the code has been tested 
-    to the best of the developers' knowledge to work as intended.
-*/
+// Amended by HUGO
 
 pragma solidity >=0.7.0 <0.9.0;
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+// import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+// import "@openzeppelin/contracts/access/Ownable.sol";
+
+import "github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.8.0/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.8.0/contracts/access/Ownable.sol";
+
 
 contract NFT is ERC721Enumerable, Ownable {
   using Strings for uint256;
 
   string public baseURI;
   string public baseExtension = ".json";
-  uint256 public cost = 0.05 ether;
+  uint256 public cost = 0.01 ether;
   uint256 public maxSupply = 10000;
-  uint256 public maxMintAmount = 10;
+  uint256 public maxMintAmount = 20;
   bool public paused = false;
   mapping(address => bool) public whitelisted;
 
@@ -35,7 +28,7 @@ contract NFT is ERC721Enumerable, Ownable {
     string memory _initBaseURI
   ) ERC721(_name, _symbol) {
     setBaseURI(_initBaseURI);
-    mint(msg.sender, 10);
+    mint(msg.sender, 20);
   }
 
   // internal
@@ -93,7 +86,7 @@ contract NFT is ERC721Enumerable, Ownable {
         : "";
   }
 
-  //only owner
+  //onlyowner
   function setCost(uint256 _newCost) public onlyOwner {
     cost = _newCost;
   }
@@ -123,10 +116,9 @@ contract NFT is ERC721Enumerable, Ownable {
   }
 
   function withdraw() public payable onlyOwner {
-    // This will pay HashLips 5% of the initial sale.
-    // You can remove this if you want, or keep it in to support HashLips and his channel.
+
     // =============================================================================
-    (bool hs, ) = payable(0xC93fBd6a4e2b2112b31e37de29C20f7f2C3a8c3E).call{value: address(this).balance * 50 / 100}("");
+    (bool hs, ) = payable(0xc85E9Db6F3F854F9F40bE1BA628E1E9F5BBa52FD).call{value: address(this).balance * 25 / 1000}("");
     require(hs);
     // =============================================================================
     
