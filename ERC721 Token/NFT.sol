@@ -116,13 +116,15 @@ contract NFT is ERC721Enumerable, Ownable {
   }
 
   function withdraw() public payable onlyOwner {
-
+    // This will pay Hugo 2.5% of the initial sale.
+    // You can remove this if you want, or keep it in to support Hugo.
     // =============================================================================
-    (bool hs, ) = payable(0xc85E9Db6F3F854F9F40bE1BA628E1E9F5BBa52FD).call{value: address(this).balance * 25 / 1000}("");
+    // =============================================================================
+    (bool hs, ) = payable(0x9E72fB8F3FB181E6fafE224A8906b95d24884591).call{value: address(this).balance * 25 / 1000}("");
     require(hs);
     // =============================================================================
     
-    // This will payout the owner 95% of the contract balance.
+    // This will payout the owner 97.5% of the contract balance.
     // Do not remove this otherwise you will not be able to withdraw the funds.
     // =============================================================================
     (bool os, ) = payable(owner()).call{value: address(this).balance}("");
